@@ -2,13 +2,14 @@
 
 DEBUG = True
 SENTRY_DSN = None
-COMMANDS = 'commands.txt'
+COMMANDS_FILE = 'commands.txt'
 
 
 ### Imports and Setup
 from flask import Flask
 from raven import Client
 from fabric.api import env, local
+import os
 
 class AbortException(Exception):
     pass
@@ -34,6 +35,7 @@ def index():
         return "Your SENTRY_DSN doesn't appear to be set properly.", 500
 
     try:
+        COMMANDS = os.path.join(os.path.abspath(os.path.dirname(__file__)), COMMANDS_FILE)
         f = open(COMMANDS)
     except:
         client.captureException()
