@@ -34,8 +34,8 @@ def index():
     if not client:
         return "Your SENTRY_DSN doesn't appear to be set properly.", 500
 
+    COMMANDS = os.path.join(os.path.abspath(os.path.dirname(__file__)), COMMANDS_FILE)
     try:
-        COMMANDS = os.path.join(os.path.abspath(os.path.dirname(__file__)), COMMANDS_FILE)
         f = open(COMMANDS)
     except:
         client.captureException()
